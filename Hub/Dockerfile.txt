@@ -15,6 +15,12 @@ ENV GRID_BROWSER_TIMEOUT 0
 ENV GRID_MAX_SESSION 5
 ENV GRID_UNREGISTER_IF_STILL_DOWN_AFTER 30000
 
+#========================
+# Custom Matcher
+#========================
+RUN git clone https://github.com/diemol/custom-capability-matcher.git /opt/selenium/custom-capability-matcher
+RUN mvn -f /opt/selenium/custom-capability-matcher -DskipTests=true package
+
 COPY generate_config /opt/selenium/generate_config
 COPY entry_point.sh /opt/bin/entry_point.sh
 RUN /opt/selenium/generate_config > /opt/selenium/config.json
@@ -23,4 +29,3 @@ RUN chown -R seluser /opt/selenium
 USER seluser
 
 CMD ["/opt/bin/entry_point.sh"]
-

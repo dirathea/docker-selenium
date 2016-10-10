@@ -19,7 +19,8 @@ function shutdown {
     echo "shutdown complete"
 }
 
-java ${JAVA_OPTS} -jar /opt/selenium/selenium-server-standalone.jar \
+java ${JAVA_OPTS} -cp /opt/selenium/selenium-server-standalone.jar:/opt/selenium/custom-capability-matcher/target/custom-capability-matcher-1.0-SNAPSHOT.jar \
+  org.openqa.grid.selenium.GridLauncher \
   -role hub \
   -hubConfig $CONF \
   ${SE_OPTS} &
@@ -27,4 +28,3 @@ NODE_PID=$!
 
 trap shutdown SIGTERM SIGINT
 wait $NODE_PID
-
